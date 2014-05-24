@@ -1,10 +1,11 @@
 package quandl
 
 import (
+	"bufio"
 	"encoding/csv"
 	"encoding/json"
 	"fmt"
-	//"io"
+	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -133,7 +134,7 @@ func getDataFromURL(url string) (*QuandlResponse, error) {
 		return nil, err
 	}
 
-	fmt.Printf("%s\n", quandlResponse)
+	//fmt.Printf("%s\n", quandlResponse)
 	return quandlResponse, nil
 }
 
@@ -187,6 +188,10 @@ func (q *QuandlResponse) GetTimeSeriesDate() []string {
 // GetTimeSeries returns a date vector and the value vector for a particular
 // column in the QuandlResponse
 func (q *QuandlResponse) GetTimeSeries(column string) ([]string, []float64) {
+	if q.Data == nil {
+		return nil, nil
+	}
+
 	dataArray := q.Data.([]interface{})
 
 	dateVector := make([]string, 0, len(dataArray))
@@ -228,7 +233,9 @@ func (q *QuandlResponse) GetTimeSeries(column string) ([]string, []float64) {
 func (q *QuandlResponse) getLikelyDataColumnName() string {
 	adjustedCloseColumn := q.getColumnNum("Adj. Close")
 
-	if adjustedCloseColumn == -1 {
+	if len(q.Columns) < 1 {
+		return "N/A"
+	} else if adjustedCloseColumn == -1 {
 		return q.Columns[len(q.Columns)-1]
 	} else {
 		return q.Columns[adjustedCloseColumn]
@@ -271,6 +278,55 @@ func loadPipeDelimited(url string) [][]string {
 
 	reader := csv.NewReader(resp.Body)
 	reader.Comma = '|'
+
+	records, _ := reader.ReadAll()
+
+	return records
+}
+
+type linefeedConverter struct {
+	r *bufio.Reader
+}
+
+func newLinefeedConverter(r io.Reader) io.Reader {
+	return linefeedConverter{bufio.NewReader(r)}
+}
+
+func (r linefeedConverter) Read(b []byte) (int, error) {
+	n, err := r.r.Read(b)
+	if err != nil {
+		return n, err
+	}
+	b = b[:n]
+	for i := range b {
+		if b[i] == '\r' {
+			var next byte
+			if j := i + 1; j < len(b) {
+				next = b[j]
+			} else {
+				next, err = r.r.ReadByte()
+				if err == nil {
+					r.r.UnreadByte()
+				}
+			}
+			if next != '\n' {
+				b[i] = '\n'
+			}
+		}
+	}
+	return n, err
+}
+
+func loadCSVMac(url string) [][]string {
+	resp, err := http.Get(url)
+	if err != nil {
+		log.Fatal(err)
+		return nil
+	}
+
+	defer resp.Body.Close()
+
+	reader := csv.NewReader(newLinefeedConverter(resp.Body))
 
 	records, _ := reader.ReadAll()
 
@@ -521,8 +577,8 @@ func GetEconomicDataList() ([]string, []string) {
 // Index membership
 // GetSP500Constituents
 func GetSP500Constituents() ([]string, []string) {
-	fmt.Printf("%s\n", spxConstituents)
-	list := loadCSV(spxConstituents)
+	//fmt.Printf("%s\n", spxConstituents)
+	list := loadCSVMac(spxConstituents)
 	/*need to prepend col 0 ticker with WIKI*/
 
 	identifier, description := extractColumns(list, 0, 2, true)
@@ -572,7 +628,7 @@ func GetFTSE100Constituents() ([]string, []string) {
 // Sector mappings
 // GetSP500SectorMappings
 func GetSP500SectorMappings() ([]string, []string) {
-	list := loadCSV(spxConstituents)
+	list := loadCSVMac(spxConstituents)
 
 	identifier, description := extractColumns(list, 0, 3, true)
 
