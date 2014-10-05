@@ -312,12 +312,17 @@ func (r linefeedConverter) Read(b []byte) (int, error) {
 			if next != '\n' {
 				b[i] = '\n'
 			}
+			// } else if b[i] == '!' { // ! character confuses cvsReader
+			// 	// fmt.Print("!FOUND!")
+			// 	b[i] = '_'
 		}
+		// fmt.Printf("%c", b[i])
 	}
+	fmt.Println("buffer", string(b), "length", n)
 	return n, err
 }
 
-func loadCSVMac(url string) [][]string {
+func loadCSVMac(url string) (records [][]string) {
 	resp, err := http.Get(url)
 	if err != nil {
 		log.Fatal(err)
@@ -326,9 +331,26 @@ func loadCSVMac(url string) [][]string {
 
 	defer resp.Body.Close()
 
-	reader := csv.NewReader(newLinefeedConverter(resp.Body))
+	c, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatal(err)
+		return nil
+	}
+	cs := strings.Replace(string(c), "\r", "\n", -1)
 
-	records, _ := reader.ReadAll()
+	reader := csv.NewReader(strings.NewReader(cs))
+
+	// for i := 0; ; i++ {
+	// 	record, err := reader.Read()
+	// 	if err == io.EOF {
+	// 		break
+	// 	} else if err != nil {
+	// 		fmt.Println("line", i, "error", err)
+	// 		break
+	// 	}
+	// 	records = append(records, record)
+	// }
+	records, _ = reader.ReadAll()
 
 	return records
 }

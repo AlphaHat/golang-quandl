@@ -3,7 +3,7 @@ package quandl
 import "fmt"
 
 func ExampleSetAuthToken() {
-	SetAuthToken("Ce1KvEKXq_xUabFiU6Rf")
+	SetAuthToken("")
 
 	x, _ := GetData("WIKI/AAPL", "2013-01-01", "2013-01-05")
 	x.ToDate = "2014-05-22"
