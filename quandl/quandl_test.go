@@ -46,10 +46,10 @@ func ExampleGetTimeSeriesData() {
 
 	dates, column := q.GetTimeSeriesData()
 
-	fmt.Printf("%s: %q\n", column, dates)
+	fmt.Printf("%s: %v\n", column, dates)
 
 	// Output:
-	// Market Capitalization: [%!q(float64=227057.1) %!q(float64=217062.1) %!q(float64=241362.8) %!q(float64=275188) %!q(float64=172089.1) %!q(float64=336499.4) %!q(float64=294403.6) %!q(float64=280921.5) %!q(float64=292811.8) %!q(float64=293355.8) %!q(float64=300819.4) %!q(float64=364524.4) %!q(float64=281947.4)]
+	// Market Capitalization: [227057.1 217062.1 241362.8 275188 172089.1 336499.4 294403.6 280921.5 292811.8 293355.8 300819.4 364524.4 281947.4]
 }
 
 func ExampleGetAllHistory() {
@@ -139,6 +139,31 @@ func ExampleGetFinancialRatiosList() {
 
 	// Output:
 	// "PE_FWD" : "Forward PE Ratio"
+}
+
+func ExampleGetTimeSeriesColumn() {
+	x, _ := GetData("WIKI/AAPL", "2013-01-01", "2013-01-05")
+	c := x.GetTimeSeriesColumn("Open")
+	fmt.Printf("%v\n", c)
+
+	c = x.GetTimeSeriesColumn("High")
+	fmt.Printf("%v\n", c)
+
+	c = x.GetTimeSeriesColumn("Low")
+	fmt.Printf("%v\n", c)
+
+	c = x.GetTimeSeriesColumn("Close")
+	fmt.Printf("%v\n", c)
+
+	c = x.GetTimeSeriesColumn("Volume")
+	fmt.Printf("%v\n", c)
+
+	// Output:
+	// [536.97 547.88 553.82]
+	// [538.63 549.67 555]
+	// [525.83 541 541.63]
+	// [527 542.1 549.03]
+	// [2.12262e+07 1.26059e+07 2.00185e+07]
 }
 
 /*func ExampleSearch() {
