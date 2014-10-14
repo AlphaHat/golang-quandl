@@ -207,7 +207,7 @@ func (q *QuandlResponse) GetTimeSeries(column string) ([]string, []float64) {
 			case string:
 				dateVector = append(dateVector, vv[dateColumnNum].(string))
 			default:
-				fmt.Printf("Problem reading %q as a string.\n", vv[0])
+				fmt.Printf("Problem reading %q as a string.\n", vv[dateColumnNum])
 				return nil, nil
 			}
 
@@ -215,8 +215,10 @@ func (q *QuandlResponse) GetTimeSeries(column string) ([]string, []float64) {
 			switch vv[dataColumnNum].(type) {
 			case float64:
 				dataVector = append(dataVector, vv[dataColumnNum].(float64))
+			case nil:
+				dataVector = append(dataVector, 0)
 			default:
-				fmt.Printf("Problem reading %q as a float64.\n", vv[0])
+				fmt.Printf("Problem reading %q as a float64.\n", vv[dataColumnNum])
 				return nil, nil
 			}
 		default:

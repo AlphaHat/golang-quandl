@@ -166,13 +166,29 @@ func ExampleGetTimeSeriesColumn() {
 	// [2.12262e+07 1.26059e+07 2.00185e+07]
 }
 
-/*func ExampleSearch() {
-	body, err := Search("Apple Inc Short Interest")
+func ExampleGetTimeSeriesColumnWithNil() {
+	x, _ := GetData("GOOG/NYSEARCA_SPY", "2012-06-15", "2012-06-15")
+	// returns [2012-06-15 <nil> <nil> <nil> 133.57 0]
 
-	if err == nil {
-		fmt.Printf("%s", body)
-	}
+	c := x.GetTimeSeriesColumn("Open")
+	fmt.Printf("%v\n", c)
+
+	c = x.GetTimeSeriesColumn("High")
+	fmt.Printf("%v\n", c)
+
+	c = x.GetTimeSeriesColumn("Low")
+	fmt.Printf("%v\n", c)
+
+	c = x.GetTimeSeriesColumn("Close")
+	fmt.Printf("%v\n", c)
+
+	c = x.GetTimeSeriesColumn("Volume")
+	fmt.Printf("%v\n", c)
 
 	// Output:
-	// Testing
-}*/
+	// [0]
+	// [0]
+	// [0]
+	// [133.57]
+	// [0]
+}
