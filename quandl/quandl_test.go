@@ -1,25 +1,25 @@
 package quandl
 
-import (
-	"fmt"
-)
+import "fmt"
 
 func ExampleSetAuthToken() {
 	SetAuthToken("")
 
 	x, _ := GetData("WIKI/AAPL", "2013-01-01", "2013-01-05")
+	x.ToDate = "2014-05-22"
 	fmt.Printf("%s\n", x)
 
 	// Output:
-	// &{WIKI Quandl Open Data AAPL daily 1980-12-12 2014-05-23 [Date Open High Low Close Volume Ex-Dividend Split Ratio Adj. Open Adj. High Adj. Low Adj. Close Adj. Volume] [[2013-01-04 %!s(float64=536.97) %!s(float64=538.63) %!s(float64=525.83) %!s(float64=527) %!s(float64=2.12262e+07) %!s(float64=0) %!s(float64=1) %!s(float64=514.9749775418) %!s(float64=516.56698168118) %!s(float64=504.29128711251) %!s(float64=505.41336231918) %!s(float64=2.12262e+07)] [2013-01-03 %!s(float64=547.88) %!s(float64=549.67) %!s(float64=541) %!s(float64=542.1) %!s(float64=1.26059e+07) %!s(float64=0) %!s(float64=1) %!s(float64=525.43808908431) %!s(float64=527.15476824665) %!s(float64=518.83990325366) %!s(float64=519.89484575565) %!s(float64=1.26059e+07)] [2013-01-02 %!s(float64=553.82) %!s(float64=555) %!s(float64=541.63) %!s(float64=549.03) %!s(float64=2.00185e+07) %!s(float64=0) %!s(float64=1) %!s(float64=531.13477859508) %!s(float64=532.26644418813) %!s(float64=519.44409759571) %!s(float64=526.54098351822) %!s(float64=2.00185e+07)]]}
+	// &{WIKI Quandl Open Data AAPL daily 1980-12-12 2014-05-22 [Date Open High Low Close Volume Ex-Dividend Split Ratio Adj. Open Adj. High Adj. Low Adj. Close Adj. Volume] [[2013-01-04 %!s(float64=536.97) %!s(float64=538.63) %!s(float64=525.83) %!s(float64=527) %!s(float64=2.12262e+07) %!s(float64=0) %!s(float64=1) %!s(float64=73.613294063499) %!s(float64=73.840863700808) %!s(float64=72.086109870961) %!s(float64=72.24650533822) %!s(float64=1.485834e+08)] [2013-01-03 %!s(float64=547.88) %!s(float64=549.67) %!s(float64=541) %!s(float64=542.1) %!s(float64=1.26059e+07) %!s(float64=0) %!s(float64=1) %!s(float64=75.108947523158) %!s(float64=75.354338879051) %!s(float64=74.165767339615) %!s(float64=74.316566496868) %!s(float64=8.82413e+07)] [2013-01-02 %!s(float64=553.82) %!s(float64=555) %!s(float64=541.63) %!s(float64=549.03) %!s(float64=2.00185e+07) %!s(float64=0) %!s(float64=1) %!s(float64=75.923262972321) %!s(float64=76.08502934101) %!s(float64=74.252134129678) %!s(float64=75.266601187558) %!s(float64=1.401295e+08)]]}
 }
 
 func ExampleGetDataStockPrice() {
 	x, _ := GetData("WIKI/AAPL", "2013-01-01", "2013-01-05")
+	x.ToDate = "2014-05-22"
 	fmt.Printf("%s\n", x)
 
 	// Output:
-	// &{WIKI Quandl Open Data AAPL daily 1980-12-12 2014-05-23 [Date Open High Low Close Volume Ex-Dividend Split Ratio Adj. Open Adj. High Adj. Low Adj. Close Adj. Volume] [[2013-01-04 %!s(float64=536.97) %!s(float64=538.63) %!s(float64=525.83) %!s(float64=527) %!s(float64=2.12262e+07) %!s(float64=0) %!s(float64=1) %!s(float64=514.9749775418) %!s(float64=516.56698168118) %!s(float64=504.29128711251) %!s(float64=505.41336231918) %!s(float64=2.12262e+07)] [2013-01-03 %!s(float64=547.88) %!s(float64=549.67) %!s(float64=541) %!s(float64=542.1) %!s(float64=1.26059e+07) %!s(float64=0) %!s(float64=1) %!s(float64=525.43808908431) %!s(float64=527.15476824665) %!s(float64=518.83990325366) %!s(float64=519.89484575565) %!s(float64=1.26059e+07)] [2013-01-02 %!s(float64=553.82) %!s(float64=555) %!s(float64=541.63) %!s(float64=549.03) %!s(float64=2.00185e+07) %!s(float64=0) %!s(float64=1) %!s(float64=531.13477859508) %!s(float64=532.26644418813) %!s(float64=519.44409759571) %!s(float64=526.54098351822) %!s(float64=2.00185e+07)]]}
+	// &{WIKI Quandl Open Data AAPL daily 1980-12-12 2014-05-22 [Date Open High Low Close Volume Ex-Dividend Split Ratio Adj. Open Adj. High Adj. Low Adj. Close Adj. Volume] [[2013-01-04 %!s(float64=536.97) %!s(float64=538.63) %!s(float64=525.83) %!s(float64=527) %!s(float64=2.12262e+07) %!s(float64=0) %!s(float64=1) %!s(float64=73.613294063499) %!s(float64=73.840863700808) %!s(float64=72.086109870961) %!s(float64=72.24650533822) %!s(float64=1.485834e+08)] [2013-01-03 %!s(float64=547.88) %!s(float64=549.67) %!s(float64=541) %!s(float64=542.1) %!s(float64=1.26059e+07) %!s(float64=0) %!s(float64=1) %!s(float64=75.108947523158) %!s(float64=75.354338879051) %!s(float64=74.165767339615) %!s(float64=74.316566496868) %!s(float64=8.82413e+07)] [2013-01-02 %!s(float64=553.82) %!s(float64=555) %!s(float64=541.63) %!s(float64=549.03) %!s(float64=2.00185e+07) %!s(float64=0) %!s(float64=1) %!s(float64=75.923262972321) %!s(float64=76.08502934101) %!s(float64=74.252134129678) %!s(float64=75.266601187558) %!s(float64=1.401295e+08)]]}
 }
 
 func ExampleGetDataStockFundamentals() {
@@ -46,10 +46,10 @@ func ExampleGetTimeSeriesData() {
 
 	dates, column := q.GetTimeSeriesData()
 
-	fmt.Printf("%s: %q\n", column, dates)
+	fmt.Printf("%s: %v\n", column, dates)
 
 	// Output:
-	// Market Capitalization: [%!q(float64=227057.1) %!q(float64=217062.1) %!q(float64=241362.8) %!q(float64=275188) %!q(float64=172089.1) %!q(float64=336499.4) %!q(float64=294403.6) %!q(float64=280921.5) %!q(float64=292811.8) %!q(float64=293355.8) %!q(float64=300819.4) %!q(float64=364524.4) %!q(float64=281947.4)]
+	// Market Capitalization: [227057.1 217062.1 241362.8 275188 172089.1 336499.4 294403.6 280921.5 292811.8 293355.8 300819.4 364524.4 281947.4]
 }
 
 func ExampleGetAllHistory() {
@@ -62,6 +62,7 @@ func ExampleGetAllHistory() {
 
 func Example() {
 	x, _ := GetData("BOE/XUDLBK73", "2013-01-01", "2013-01-05")
+	x.ToDate = "2014-05-22"
 	fmt.Printf("%s\n", x)
 
 	// Output:
@@ -140,13 +141,54 @@ func ExampleGetFinancialRatiosList() {
 	// "PE_FWD" : "Forward PE Ratio"
 }
 
-/*func ExampleSearch() {
-	body, err := Search("Apple Inc Short Interest")
+func ExampleGetTimeSeriesColumn() {
+	x, _ := GetData("WIKI/AAPL", "2013-01-01", "2013-01-05")
+	c := x.GetTimeSeriesColumn("Open")
+	fmt.Printf("%v\n", c)
 
-	if err == nil {
-		fmt.Printf("%s", body)
-	}
+	c = x.GetTimeSeriesColumn("High")
+	fmt.Printf("%v\n", c)
+
+	c = x.GetTimeSeriesColumn("Low")
+	fmt.Printf("%v\n", c)
+
+	c = x.GetTimeSeriesColumn("Close")
+	fmt.Printf("%v\n", c)
+
+	c = x.GetTimeSeriesColumn("Volume")
+	fmt.Printf("%v\n", c)
 
 	// Output:
-	// Testing
-}*/
+	// [536.97 547.88 553.82]
+	// [538.63 549.67 555]
+	// [525.83 541 541.63]
+	// [527 542.1 549.03]
+	// [2.12262e+07 1.26059e+07 2.00185e+07]
+}
+
+func ExampleGetTimeSeriesColumnWithNil() {
+	x, _ := GetData("GOOG/NYSEARCA_SPY", "2012-06-15", "2012-06-15")
+	// returns [2012-06-15 <nil> <nil> <nil> 133.57 0]
+
+	c := x.GetTimeSeriesColumn("Open")
+	fmt.Printf("%v\n", c)
+
+	c = x.GetTimeSeriesColumn("High")
+	fmt.Printf("%v\n", c)
+
+	c = x.GetTimeSeriesColumn("Low")
+	fmt.Printf("%v\n", c)
+
+	c = x.GetTimeSeriesColumn("Close")
+	fmt.Printf("%v\n", c)
+
+	c = x.GetTimeSeriesColumn("Volume")
+	fmt.Printf("%v\n", c)
+
+	// Output:
+	// [0]
+	// [0]
+	// [0]
+	// [133.57]
+	// [0]
+}
